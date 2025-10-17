@@ -1,6 +1,21 @@
+import { useEffect, useState } from "react";
 import Card from "./Card";
 
-export default function Section({ title, products }) {
+const apiURL = import.meta.env.VITE_API_URL;
+
+export default function Section({ title, category }) {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const url = `${apiURL}products/category/${category}`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setProducts(data);
+      });
+  }, []);
+
   return (
     <div>
       <h1 className="text-4xl font-bold text-center p-5 bg-amber-400 my-10">
